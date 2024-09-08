@@ -5,43 +5,21 @@
 
 #include "shader.cc"
 
-#define WIDTH 1920*0.3
+#define WIDTH 1920*0.4
 #define HEIGHT 1080*0.4
 
 SDL_Window *win;
 SDL_GLContext ctx;
 
-const double TRIANGLE_VERTICES[3][2] = {
-	{ -1., -1. },
-	{ 1., -1. },
-	{ -1, 1. }
-};
-
-const double TRIANGLE_VERTICES2[3][2] = {
-	{ 1., 1. },
-	{ 1., -1. },
-	{ -1., 1. }
-};
-
-void render_triangle(Shader *shader) {
-	unsigned int vao;
-	glGenVertexArrays(1,&vao);
+void render_triangle(Shader *shader, unsigned int vao, unsigned int vbo, double *vert, float r, float g, float b) {
 	glBindVertexArray(vao);
-	unsigned int vbo;
-	glGenBuffers(1,&vbo);
 	glBindBuffer(GL_ARRAY_BUFFER,vbo);
-	glBufferData(GL_ARRAY_BUFFER,sizeof(TRIANGLE_VERTICES),TRIANGLE_VERTICES,GL_STATIC_DRAW);
-	glVertexAttribPointer(0,2,GL_DOUBLE,GL_FALSE,2*sizeof(double),(void *)0);
 	glEnableVertexAttribArray(0);
-	glBindVertexArray(vao);
+	glBufferData(GL_ARRAY_BUFFER,sizeof(double)*6,vert,GL_STATIC_DRAW);
+	glVertexAttribPointer(0,2,GL_DOUBLE,GL_FALSE,sizeof(double)*2,(void *)0);
 	shader->use();
-	shader->set_color(1.,0.,0.,1.);
-	glDrawArrays(GL_TRIANGLES,0,3);
-
+	shader->set_color(r,g,b,1.);
 	glBindVertexArray(vao);
-	glBufferData(GL_ARRAY_BUFFER,sizeof(TRIANGLE_VERTICES2),TRIANGLE_VERTICES2,GL_STATIC_DRAW);
-	glBindVertexArray(vao);
-	shader->set_color(0.,1.,0.,1.);
 	glDrawArrays(GL_TRIANGLES,0,3);
 }
 
@@ -68,16 +46,49 @@ int main() {
 
 	SDL_Event event;
 
+	unsigned int vao;
+	glGenVertexArrays(1,&vao);
+
+	unsigned vbo;
+	glGenBuffers(1,&vbo);
+
 	Shader shader = Shader();
 	shader.load_vertex_shader("./shaders/vertex.shader");
 	shader.load_fragment_shader("./shaders/fragment.shader");
 	shader.compile();
 
+	double vert1[] = {
+		-1., -1,
+		0., -1.,
+		-1., 1.
+	};
+
+	double vert2[] = {
+		0., 1.,
+		0., -1.,
+		-1., 1.
+	};
+
+	double vert3[] = {
+		0., 1.,
+		0., -1.,
+		1., 1.
+	};
+
+	double vert4[] = {
+		1., -1.,
+		0., -1.,
+		1, 1.
+	};
+
 	while(1) {
 		SDL_PollEvent(&event);
 		if(event.type == SDL_QUIT)
 			break;
-		render_triangle(&shader);
+		render_triangle(&shader,vao,vbo,vert1,1.,1.,1.);
+		render_triangle(&shader,vao,vbo,vert2,1.,1.,1.);
+		render_triangle(&shader,vao,vbo,vert3,1.,0.2,0.);
+		render_triangle(&shader,vao,vbo,vert4,1.,0.2,0.);
 		SDL_GL_SwapWindow(win);
 	}
 
