@@ -8,6 +8,6 @@ FetchContent_Declare(
 )
 FetchContent_GetProperties(sdl2)
 FetchContent_MakeAvailable(sdl2)
-add_executable(opengl main.c glad.c)
+add_executable(opengl main.cc glad.c)
 link_directories(${sdl2_BINARY_DIR})
 target_link_libraries(opengl SDL2)
