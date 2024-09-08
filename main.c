@@ -95,6 +95,8 @@ int main() {
 		SDL_PollEvent(&event);
 		if(event.type == SDL_QUIT)
 			break;
+		glClearColor(0.3,1.,0.4,1.);
+		glClear(GL_COLOR_BUFFER_BIT);
 		render_triangle();
 		SDL_GL_SwapWindow(win);
 	}
