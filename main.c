@@ -3,13 +3,16 @@
 #include "_deps/sdl2-src/include/SDL.h"
 #include "glad.h"
 
+#define WIDTH 1920*0.3
+#define HEIGHT 1080*0.4
+
 SDL_Window *win;
 SDL_GLContext ctx;
 
 const double TRIANGLE_VERTICES[3][2] = {
-	{ -1., -1. },
-	{ 1., -1. },
-	{ 0., 1. }
+	{ -0.5, -0.5 },
+	{ 0.5, -0.5 },
+	{ 0., 0.5 }
 };
 
 const char *PTR;
@@ -57,8 +60,8 @@ int main() {
 		"Hello GL",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		500,
-		500,
+		WIDTH,
+		HEIGHT,
 		SDL_WINDOW_OPENGL
 	);
 	ctx = SDL_GL_CreateContext(win);
@@ -68,7 +71,7 @@ int main() {
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 	gladLoadGL();
 
-	glViewport(0,0,500,500);
+	glViewport(0,0,WIDTH,HEIGHT);
 
 	SDL_Event event;
 
