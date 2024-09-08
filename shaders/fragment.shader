@@ -1,5 +1,6 @@
 #version 400 core
-out vec4 color;
+out vec4 FragColor;
+uniform vec4 def;
 void main() {
-	color = vec4(1.,0.,0.,1.);
+	FragColor = def;
 }

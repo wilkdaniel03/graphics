@@ -17,6 +17,12 @@ const double TRIANGLE_VERTICES[3][2] = {
 	{ -1, 1. }
 };
 
+const double TRIANGLE_VERTICES2[3][2] = {
+	{ 1., 1. },
+	{ 1., -1. },
+	{ -1., 1. }
+};
+
 void render_triangle(Shader *shader) {
 	unsigned int vao;
 	glGenVertexArrays(1,&vao);
@@ -29,6 +35,13 @@ void render_triangle(Shader *shader) {
 	glEnableVertexAttribArray(0);
 	glBindVertexArray(vao);
 	shader->use();
+	shader->set_color(1.,0.,0.,1.);
+	glDrawArrays(GL_TRIANGLES,0,3);
+
+	glBindVertexArray(vao);
+	glBufferData(GL_ARRAY_BUFFER,sizeof(TRIANGLE_VERTICES2),TRIANGLE_VERTICES2,GL_STATIC_DRAW);
+	glBindVertexArray(vao);
+	shader->set_color(0.,1.,0.,1.);
 	glDrawArrays(GL_TRIANGLES,0,3);
 }
 

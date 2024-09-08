@@ -3,6 +3,7 @@
 #include "glad.h"
 
 class Shader {
+public:
 	unsigned int vertex_shader;
 	unsigned int fragment_shader;
 	unsigned int program;
@@ -15,7 +16,6 @@ class Shader {
 			fprintf(stderr,"Failed to compile vertex shader\n");
 	}
 
-public:
 	Shader() {
 		this->vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 		this->fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -62,6 +62,11 @@ public:
 		glGetProgramiv(this->program,GL_LINK_STATUS,&success);
 		if(!success)
 			fprintf(stderr,"Failed to link program\n");
+	}
+
+	void set_color(float r, float g, float b, float alfa) {
+		int location = glGetUniformLocation(this->program,"def");
+		glUniform4f(location,r,g,b,alfa);
 	}
 
 	void use() {
