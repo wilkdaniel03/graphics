@@ -1,0 +1,20 @@
+[
+  {
+    "arguments": [
+      "/bin/gcc",
+      "-c",
+      "main.c"
+    ],
+    "directory": "/home/dev/github.com/wilkdaniel03/graphics",
+    "file": "/home/dev/github.com/wilkdaniel03/graphics/main.c"
+  },
+  {
+    "arguments": [
+      "/bin/gcc",
+      "-c",
+      "glad.c"
+    ],
+    "directory": "/home/dev/github.com/wilkdaniel03/graphics",
+    "file": "/home/dev/github.com/wilkdaniel03/graphics/glad.c"
+  }
+]
